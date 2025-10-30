@@ -1,0 +1,116 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>¡Felicidades! 🎉</title>
+  <style>
+    :root{
+      --bg:#0f172a;
+      --card:#0b1220;
+      --accent:#ffdd57;
+      --text:#f8fafc;
+    }
+    html,body{height:100%;margin:0;font-family:Inter,system-ui,Segoe UI,Roboto,'Helvetica Neue',Arial}
+    body{background:radial-gradient(1200px 600px at 10% 10%, rgba(255,210,120,0.06), transparent),
+                 linear-gradient(180deg, #081026 0%, #071021 100%);
+         display:flex;align-items:center;justify-content:center;color:var(--text)}
+
+    .card{
+      width:min(920px,92%);
+      background:linear-gradient(180deg, rgba(255,255,255,0.03), rgba(255,255,255,0.02));
+      border-radius:18px;padding:48px 36px;box-shadow:0 10px 40px rgba(2,6,23,0.6);text-align:center;position:relative;overflow:hidden;
+      border:1px solid rgba(255,255,255,0.03)
+    }
+
+    h1{
+      font-size:clamp(28px,6vw,56px);margin:0 0 12px;letter-spacing:1px;
+      background:linear-gradient(90deg,#fff 0%,var(--accent) 40%, #ffd27a 70%);
+      -webkit-background-clip:text;background-clip:text;color:transparent;
+      filter:drop-shadow(0 6px 18px rgba(255,173,51,0.12));
+      animation:floatText 3s ease-in-out infinite;
+    }
+
+    @keyframes floatText{
+      0%{transform:translateY(0) rotate(-1deg)}
+      50%{transform:translateY(-8px) rotate(1deg)}
+      100%{transform:translateY(0) rotate(-1deg)}
+    }
+
+    p.lead{font-size:clamp(16px,2.6vw,20px);opacity:0.95;margin:0 0 20px}
+
+    /* Confetti pieces */
+    .confetti{position:absolute;inset:0;pointer-events:none}
+    .confetti i{position:absolute;width:10px;height:16px;border-radius:2px;opacity:0.95;transform-origin:center;}
+
+    @keyframes drop{
+      0%{transform:translateY(-10vh) rotate(0) scale(1);opacity:1}
+      100%{transform:translateY(120vh) rotate(720deg) scale(0.9);opacity:0.95}
+    }
+
+    /* Sparkles behind */
+    .sparkles{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);width:120%;height:120%;pointer-events:none;mix-blend-mode:screen}
+    .sparkles span{position:absolute;width:6px;height:6px;border-radius:50%;background:radial-gradient(circle,#fff,rgba(255,255,255,0.4));opacity:0.0;animation:glow 2.8s linear infinite}
+    @keyframes glow{0%{opacity:0;transform:scale(.6)}50%{opacity:1;transform:scale(1.4)}100%{opacity:0;transform:scale(.6)}}
+
+    footer{margin-top:18px;font-size:13px;opacity:0.6}
+
+    @media (max-width:520px){.card{padding:26px}}
+  </style>
+</head>
+<body>
+  <div class="card" role="region" aria-label="Mensaje de felicitación">
+    <h1>¡Felicidades! — Mucho éxito!!! 🎉</h1>
+    <p class="lead">Un pequeño mensaje animado para celebrar tu logro. Sigue adelante con energía y alegría.</p>
+    <footer>Saluuudd!! un ratito para los nervios 🍻🍹</footer>
+
+    <!-- Confetti layer -->
+    <div class="confetti" id="confetti" aria-hidden="true"></div>
+
+    <!-- Sparkles -->
+    <div class="sparkles" id="sparkles" aria-hidden="true"></div>
+  </div>
+
+  <script>
+    const confetti = document.getElementById('confetti');
+    const colors = ['#FF6B6B','#FFD166','#06D6A0','#4D96FF','#C77DFF','#FFB86B'];
+
+    function createConfetti(){
+      confetti.innerHTML = '';
+      for(let i=0;i<40;i++){
+        const el = document.createElement('i');
+        const left = Math.random()*100;
+        const delay = (Math.random()*2).toFixed(2);
+        const duration = (3 + Math.random()*3).toFixed(2);
+        const bg = colors[Math.floor(Math.random()*colors.length)];
+        el.style.left = left + '%';
+        el.style.top = (Math.random()*-20)+'vh';
+        el.style.background = bg;
+        el.style.width = (8 + Math.random()*10)+'px';
+        el.style.height = (10 + Math.random()*14)+'px';
+        el.style.transform = 'rotate('+ (Math.random()*360) +'deg)';
+        el.style.animation = `drop ${duration}s cubic-bezier(.18,.84,.38,.98) ${delay}s both`;
+        el.style.borderRadius = Math.random()>0.5 ? '2px' : '50%';
+        el.style.opacity = 0.95;
+        confetti.appendChild(el);
+      }
+    }
+
+    const sparkles = document.getElementById('sparkles');
+    for(let i=0;i<18;i++){
+      const s = document.createElement('span');
+      s.style.left = (10 + Math.random()*80)+'%';
+      s.style.top = (10 + Math.random()*80)+'%';
+      s.style.animationDelay = (Math.random()*2)+'s';
+      s.style.width = (4 + Math.random()*8)+'px';
+      s.style.height = s.style.width;
+      s.style.opacity = 0.8;
+      sparkles.appendChild(s);
+    }
+
+    // Bucle infinito de confeti
+    createConfetti();
+    setInterval(createConfetti, 4000);
+  </script>
+</body>
+</html>
